@@ -1,3 +1,8 @@
+# 声明
+- 基于官方v3.2.3版本基础上只做bug修复,不新增功能
+- 我本人的服务器是windows版 所以只打包windows版
+
+
 ![logo-blue](https://user-images.githubusercontent.com/51039935/197520391-f35db354-6071-4c12-86ea-fc450f04bc85.png)
 # NAS媒体库管理工具
 
