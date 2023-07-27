@@ -192,5 +192,3 @@ laboratory:
   use_douban_titles: false
   # 【精确搜索使用英文名称】：开启后对于精确搜索场景（远程搜索、订阅搜索等）将会使用英文名检索站点资源以提升匹配度，但对有些站点资源标题全是中文的则需要关闭，否则匹配不到
   search_en_title: false
-# 填写完整的路径 请勿有中文和空格路径 如: chrome_driver_path: C:\Users\mmm\Downloads\111111111111\111111\1111\chromedriver.exe
-chrome_driver_path:

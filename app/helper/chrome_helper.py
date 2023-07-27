@@ -1,6 +1,5 @@
 import json
 import os.path
-import sys
 import tempfile
 from functools import reduce
 from threading import Lock
@@ -9,9 +8,8 @@ import undetected_chromedriver as uc
 from webdriver_manager.chrome import ChromeDriverManager
 
 import app.helper.cloudflare_helper as CloudflareHelper
-from app.utils import SystemUtils, RequestUtils, ExceptionUtils
+from app.utils import SystemUtils, RequestUtils
 from config import Config
-import ruamel.yaml
 
 lock = Lock()
 
@@ -43,26 +41,7 @@ class ChromeHelper(object):
         if not uc.find_chrome_executable():
             return
         global driver_executable_path
-        try:
-            driver_executable_path = ChromeDriverManager().install()
-        except:
-            try:
-                _config_file_path=os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "config","config.yaml")
-                with open(_config_file_path, mode='r', encoding='utf-8') as f:
-                    try:
-                        yaml = ruamel.yaml.YAML()
-                        _config = yaml.load(f)
-                        chrome_driver_path=_config.get('chrome_driver_path')
-                        if not chrome_driver_path:
-                            raise ValueError('【Config】未获取到chrome浏览器驱动路径.请查看config文件的chrome_driver_path是否填写')
-                        driver_executable_path=chrome_driver_path
-                    except Exception as e:
-                        ExceptionUtils.exception_traceback(e)
-                        quit()
-            except Exception as e:
-                ExceptionUtils.exception_traceback(e)
-                quit()
-                
+        driver_executable_path = ChromeDriverManager().install()
 
     @property
     def browser(self):
