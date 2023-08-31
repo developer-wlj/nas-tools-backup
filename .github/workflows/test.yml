@@ -1,0 +1,61 @@
+name: Windows MoviePilot Builder
+on:
+  workflow_dispatch:
+
+jobs:
+  Windows-build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install dependent packages
+      run: |
+        git checkout wlj0807
+        dir
+        $hash=git log -1 --pretty=%H
+        $hash_version=$hash.Substring(0, 7)
+        echo $hash_version
+        echo $env:GITHUB_REF
+        echo "HASH_VERSION = $hash_version" >> $env:GITHUB_ENV
+
+
+    - name: Download MoviePilot-Frontend
+      run: |
+          cd ..
+          mkdir MoviePilot-Frontend
+          cd MoviePilot-Frontend
+          New-Item -Path . -Name "newfile.txt" -ItemType File
+          $response = Invoke-WebRequest -Uri 'https://api.github.com/repos/jxxghp/MoviePilot-Frontend/releases/latest' -Method GET
+          # 将响应内容转换为JSON对象
+          $json = $response.Content | ConvertFrom-Json
+          # 提取tag_name的值
+          $tagName = $json.tag_name
+          # 输出tag_name的值
+          echo "正在下载前端程序 $tagName..."
+          echo "FIRST_VERSION = $tagName" >> $env:GITHUB_ENV
+          echo ${{ env.GITHUB_ENV }}
+          cat ${{ env.GITHUB_ENV }}
+          # 设置URL和下载路径
+          $url = "https://github.com/jxxghp/MoviePilot-Frontend/releases/download/$tagName/dist.zip"
+          echo "正在下载前端程序 $url"
+          # $destination = "D:\a\MoviePilot\MoviePilot\MoviePilot-Frontend\dist.zip"
+          # # 使用Invoke-WebRequest下载ZIP文件
+          # $response = Invoke-WebRequest -Uri $url -OutFile $destination
+          # echo $response
+          # echo $response.StatusCode
+          # if ($response.StatusCode -eq 200) {
+          # Write-Host "文件已成功下载到：$destination"
+          # } else {
+          # Write-Error "下载失败，状态码：$($response.StatusCode)"
+          # }
+          # $zipFilePath = './dist.zip'
+          # Expand-Archive -Path $zipFilePath -DestinationPath dist
+          dir
+
+
+
+
+
+
+
